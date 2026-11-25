@@ -1,70 +1,69 @@
-# num=ord("A") # function (build-in)
-# print(num)
-
-# letter=chr(82)
-# print(letter)
-
-# key=5
-# plaintext_letter="M"
-
-# shift_number = ord(plaintext_letter) + key
-# letter=chr(shift_number)
-
-# print(letter)
-
-# ciphertext_letter="P"
-
-# assert letter == ciphertext_letter
-
-# output -> print
-# input -> input
-
 ALPHABET_SIZE = 26
 
+# read a messade and a key
 message: str = input("Message: ")
 key: int = int(input("Key: "))
 
-# print(type(message))
-# print(type(key))
-
-# 'str' -> STRING (words)
-# 'int' -> INTERGER (whole number)
+#==============================================================
+# encription loop
+#==============================================================
 
 ciphertext: str = ""
 
-# encription loop
 for character in message:
-    # check whether our character is between "A" and "Z"
-    # if character >= "A" and character <= "Z":
+
+    # check whether the character is an uppercase letter (A-Z)
     if "A" <= character <= "Z":
-        shifted = ord(character)+key
+        shifted = ord(character) + key
         if shifted > ord("Z"):
             shifted -= ALPHABET_SIZE
         ciphertext += chr(shifted) 
+
+    # check whether the character is an lowercase letter (a-z)
+    elif  "a" <= character <= "z": 
+        shifted = ord(character) + key
+        if shifted > ord("z"):
+            shifted -= ALPHABET_SIZE
+        ciphertext += chr(shifted)
+
+    # unchanged non-alphabetic characters
     else:
         ciphertext += character
 
-print("Chipertext: ", ciphertext)
 
-plaintext:str = ""
+# print encrypted message
+print("Ciphertext:", ciphertext)
 
+#==============================================================
 # decription loop
+#==============================================================
+
+plaintext: str = ""
+
 for character in ciphertext:
-    # check whether our character is between "A" and "Z"
-    # if character >= "A" and character <= "Z":
+
+    # check whether the character is an lowercase letter (A-Z)
     if "A" <= character <= "Z":
-        shifted = ord(character)-key
+        shifted = ord(character) - key
         if shifted < ord("A"):
             shifted += ALPHABET_SIZE
         plaintext += chr(shifted) 
+
+    # check whether the character is an lowercase letter (a-z)
+    elif  "a" <= character <= "z":
+        shifted = ord(character) - key
+        if shifted < ord("a"):
+            shifted += ALPHABET_SIZE
+        plaintext += chr(shifted)
+
+    # unchanged non-alphabetic characters
     else:
         plaintext += character
 
 
+# print decrypted message
+print("Plaintext:", plaintext)
 
-print("Plaintext: ", plaintext)
 
 # check if the message equals the plantext
 assert message == plaintext, "The encription-decription doesn't close"
-
-
